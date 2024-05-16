@@ -1,20 +1,14 @@
-# WordPress Docker Setup
+# QUETE Docker Compose Wordpress 
 
 ## Structure du projet
 
-project/ <br>
-├── docker-compose.yml <br>
+wordpress/ <br>
+├── compose.yml <br>
 ├── .env <br>
-├── secrets/ <br>
-│ ├── mysql_root_password.txt <br>
-│ ├── mysql_database.txt <br>
-│ ├── mysql_user.txt <br>
+├── secret/ <br>
 │ ├── mysql_password.txt <br>
+│ ├── mysql_root_password.txt <br>
 │ ├── wordpress_db_password.txt <br>
-├── wordpress/ <br>
-│ ├── Dockerfile <br>
-├── db/ <br>
-│ ├── Dockerfile <br>
 └── README.md <br>
 
 ## Variables d'environnement
