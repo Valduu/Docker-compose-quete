@@ -1,0 +1,55 @@
+version: '3'
+services:
+  # Création d'un service BDD
+  wordpress_db:
+    image: mysql:8.0
+    container_name: wordpress_db
+    restart: always
+    ports:
+      - "80:80"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD_}
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    networks:
+      - backend
+    volumes:
+      - db_data:/var/lib/mysql
+    secrets:
+      - mysql_root_password
+      - mysql_password
+
+  # Création d'un service Wordpress
+  wordpress:
+    depends_on:
+      - wordpress_db
+    image: wordpress:latest
+    container_name: wordpress
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: wordpress_db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+      WORDPRESS_DB_NAME: wordpress
+    networks:
+      - backend
+      - frontend
+    volumes:
+      - wp_data:/var/www/html
+    secrets:
+      - wordpress_db_password
+secrets:
+  mysql_root_password:
+    file: ./secret/mysql_root_password.txt
+  mysql_password:
+    file: ./secret/mysql_password.txt
+  wordpress_db_password:
+    file: ./secret/wordpress_db_password.txt
+
+networks:
+  frontend:
+  backend:
+volumes:
+  db_data:
+  wp_data:
